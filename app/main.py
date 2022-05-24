@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from app.api.v1.routes import routers
 from app.core.config import settings
 
 
@@ -24,3 +25,6 @@ if settings.BACKEND_CORS_ORIGINS:
 @app.get('/')
 def root():
     return "service is working"
+
+
+app.include_router(routers, prefix=settings.API_V1_STR)
