@@ -14,10 +14,11 @@ Base FastAPI project for applying general RestAPI Application cases.
 1. python3.7+
 2. fastapi 0.78.0
 3. database
-   1. Migration with alembic 
-   2. pytest with real DB
-   3. Load with two ways (eager, lazy)
-   4. Modeling with schema (1:1, 1:n, n:n)
+   1. MySQL5.7+
+   2. Migration with alembic
+   3. pytest with real DB
+   4. Load with two ways (eager, lazy)
+   5. Modeling with schema (1:1, 1:n, n:n)
 4. dependency-injector
    1. service-repository pattern
 5. JWT authentication
@@ -25,3 +26,5 @@ Base FastAPI project for applying general RestAPI Application cases.
 6. deployment
    1. container environment(k8s, docker)
    2. raw WAS(Web Application Server)
+
+## commands
