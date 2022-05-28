@@ -3,6 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from app.api.v1.routes import routers
 from app.core.config import settings
+from app.core.container import Container
 
 
 app = FastAPI(
@@ -10,6 +11,10 @@ app = FastAPI(
     openapi_url=f'{settings.API_V1_STR}/openapi.json',
     version='0.0.1'
 )
+
+container = Container()
+db = container.db()
+db.create_database()
 
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:
