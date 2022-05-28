@@ -5,7 +5,7 @@ from app.core.database import BaseModel
 from app.utils.date import get_now
 
 
-class User(BaseModel):
+class UserModel(BaseModel):
     __tablename__ = 'user'
 
     id = Column(INTEGER(unsigned=True), primary_key=True, index=True, autoincrement=True)

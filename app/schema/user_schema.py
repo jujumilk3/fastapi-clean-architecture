@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from app.schema.base import FindBase, ModelBaseInfo, SearchOptions
+from app.schema.base_schema import FindBase, ModelBaseInfo, SearchOptions
 from app.utils.schema import AllOptional
 
 

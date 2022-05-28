@@ -2,8 +2,8 @@ from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends
 
 from app.core.container import Container
-from app.schema.base import Blank
-from app.schema.user import FindUser, User, UpsertUser, FindUserResult
+from app.schema.base_schema import Blank
+from app.schema.user_schema import FindUser, User, UpsertUser, FindUserResult
 from app.services.user_service import UserService
 
 
