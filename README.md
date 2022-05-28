@@ -11,7 +11,7 @@ Base FastAPI project for applying general RestAPI Application cases.
 5. Versatility.
 
 ## integrated with
-1. python3.7+
+1. python3.9+
 2. fastapi 0.78.0
 3. database
    1. MySQL5.7+
@@ -28,3 +28,20 @@ Base FastAPI project for applying general RestAPI Application cases.
    2. raw WAS(Web Application Server)
 
 ## commands
+1. db
+   1. `alembic upgrade head`: apply every migrations
+   2. `alembic downgrade base`: rollback every migrations
+2. server
+   1. `uvicorn app.main:app --reload`: base
+   2. options
+      1. host: `--host 0.0.0.0`
+      2. port: `--port 8000`
+
+## sample env
+```dotenv
+ENV=dev
+MYSQL_USER=root
+MYSQL_PASSWORD=qwer1234
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+```
