@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from app.schema.base import ModelBaseInfo
+from app.schema.base import FindBase, ModelBaseInfo, SearchOptions
 from app.utils.schema import AllOptional
 
 
@@ -19,3 +19,17 @@ class BaseUser(BaseModel):
 
 class User(ModelBaseInfo, BaseUser, metaclass=AllOptional):
     ...
+
+
+class FindUser(FindBase, BaseUser, metaclass=AllOptional):
+    email__eq: str
+    ...
+
+
+class UpsertUser(BaseUser, metaclass=AllOptional):
+    ...
+
+
+class FindUserResult(BaseModel):
+    founds: Optional[List[User]]
+    search_options: Optional[SearchOptions]
