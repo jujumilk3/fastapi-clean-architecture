@@ -10,6 +10,11 @@ Base FastAPI project for applying general RestAPI Application cases.
 4. Compatibility.
 5. Versatility.
 
+## base models
+1. user
+2. post [user (1 : n) post]
+3. tag [post (n : n) tag]
+
 ## integrated with
 1. python3.9+
 2. fastapi 0.78.0
