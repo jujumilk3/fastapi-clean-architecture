@@ -29,7 +29,7 @@ class Database:
         )
 
     def create_database(self) -> None:
-        Base.metadata.create_all(self._engine)
+        BaseModel.metadata.create_all(self._engine)
 
     @contextmanager
     def session(self) -> Callable[..., AbstractContextManager[Session]]:
