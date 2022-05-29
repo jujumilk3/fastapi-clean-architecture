@@ -1,1 +1,2 @@
+from app.repositories.post_repository import PostRepository
 from app.repositories.user_repository import UserRepository

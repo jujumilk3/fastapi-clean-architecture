@@ -20,4 +20,4 @@ class PostModel(BaseModel):
     created_at = Column(DATETIME, nullable=True, default=get_now)
     updated_at = Column(DATETIME, nullable=True, default=get_now, onupdate=get_now)
 
-    user = relationship('User', foreign_key='PostModel.user_id')
+    user = relationship('UserModel', foreign_keys='PostModel.user_id')
