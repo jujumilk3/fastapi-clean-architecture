@@ -13,8 +13,8 @@ class PostModel(BaseModel):
     id = Column(INTEGER(unsigned=True), primary_key=True, index=True, autoincrement=True)
     user_id = Column(INTEGER(unsigned=True), ForeignKey(UserModel.id))
 
-    title = Column(VARCHAR(255), nullable=False)
-    content = Column(TEXT, nullable=False)
+    title = Column(VARCHAR(255), nullable=True)
+    content = Column(TEXT, nullable=True)
     is_published = Column(BOOLEAN, default=False)
 
     created_at = Column(DATETIME, nullable=True, default=get_now)
