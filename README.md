@@ -2,6 +2,7 @@
 
 ## description
 Base FastAPI project for applying general RestAPI Application cases.
+![openapi-docs](./doc/images/openapi-docs.png)
 
 ## concept
 1. Minimal functionality.
@@ -33,9 +34,11 @@ Base FastAPI project for applying general RestAPI Application cases.
    2. raw WAS(Web Application Server)
 
 ## commands
-1. db
+1. db(alembic)
    1. `alembic upgrade head`: apply every migrations
    2. `alembic downgrade base`: rollback every migrations
+   3. `alembic revision -m "revision_name"`: create new migration 
+   4. `alembic history`: get alembic revision history
 2. server
    1. `uvicorn app.main:app --reload`: base
    2. options
@@ -50,3 +53,8 @@ MYSQL_PASSWORD=qwer1234
 MYSQL_HOST=localhost
 MYSQL_PORT=3306
 ```
+
+## references
+1. [FastAPI official docs](https://fastapi.tiangolo.com/)
+2. [alembic official tutorial](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
+3. [Dependency Injector](https://python-dependency-injector.ets-labs.org/)
