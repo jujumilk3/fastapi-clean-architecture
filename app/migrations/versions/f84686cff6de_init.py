@@ -49,6 +49,15 @@ def upgrade():
         Column('updated_at', DATETIME, nullable=True, default=get_now, onupdate=get_now)
     )
 
+    op.create_table(
+        'tag',
+        Column('id', INTEGER(unsigned=True), primary_key=True, index=True, autoincrement=True),
+        Column('name', VARCHAR(255), nullable=False),
+        Column('description', VARCHAR(255), nullable=True),
+        Column('created_at', DATETIME, nullable=True, default=get_now),
+        Column('updated_at', DATETIME, nullable=True, default=get_now, onupdate=get_now)
+    )
+
     op.create_foreign_key(
         constraint_name='fk_post_user',
         source_table='post',
@@ -60,5 +69,7 @@ def upgrade():
 
 def downgrade():
     if env not in ['prod', 'staging']:
+        op.drop_table('tag')
+        op.drop_table('post')
         op.drop_table('user')
 
