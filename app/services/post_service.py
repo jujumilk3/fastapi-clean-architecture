@@ -6,3 +6,7 @@ class PostService(BaseService):
     def __init__(self, post_repository: PostRepository):
         self.post_repository = post_repository
         super().__init__(post_repository)
+
+    def add(self, schema):
+        print("here is add post")
+        print(schema)

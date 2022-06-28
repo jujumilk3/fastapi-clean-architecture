@@ -3,10 +3,9 @@ from fastapi import APIRouter, Depends
 
 from app.core.container import Container
 from app.core.dependencies import get_current_active_user
-from app.core.security import JWTBearer
 from app.models.user_model import UserModel
 from app.schema.base_schema import Blank
-from app.schema.post_tag_schema import FindPost, Post, UpsertPost, FindPostResult, FindPostWithTagsResult
+from app.schema.post_tag_schema import FindPost, PostWithTags, UpsertPostWithTags, FindPostWithTagsResult
 from app.services.post_service import PostService
 
 router = APIRouter(
@@ -24,7 +23,7 @@ async def get_post_list(
     return service.get_list(find_query)
 
 
-@router.get('/{id}', response_model=Post)
+@router.get('/{id}', response_model=PostWithTags)
 @inject
 async def get_post(
         id: int,
@@ -33,21 +32,21 @@ async def get_post(
     return service.get_by_id(id)
 
 
-@router.post('', response_model=Post)
+@router.post('', response_model=PostWithTags)
 @inject
 async def create_post(
-        post: UpsertPost,
+        post: UpsertPostWithTags,
         service: PostService = Depends(Provide[Container.post_service]),
         current_user: UserModel = Depends(get_current_active_user)
 ):
     return service.add(post)
 
 
-@router.patch('/{id}', response_model=Post)
+@router.patch('/{id}', response_model=PostWithTags)
 @inject
 async def update_post(
         id: int,
-        post: UpsertPost,
+        post: UpsertPostWithTags,
         service: PostService = Depends(Provide[Container.post_service]),
         current_user: UserModel = Depends(get_current_active_user)
 ):

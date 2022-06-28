@@ -58,12 +58,23 @@ class FindTagResult(BaseModel):
     search_options: Optional[SearchOptions]
 
 
+# for many to many
+
+
 class PostWithTags(Post):
     tags: Optional[List[Tag]]
 
 
 class TagWithPosts(Tag):
-    posts: Optional[List[Tag]]
+    posts: Optional[List[Post]]
+
+
+class UpsertPostWithTags(ModelBaseInfo, UpsertPost):
+    tag_ids: Optional[List[int]]
+
+
+class UpsertTagWithPosts(ModelBaseInfo, UpsertTag):
+    post_ids: Optional[List[int]]
 
 
 class FindPostWithTagsResult(BaseModel):

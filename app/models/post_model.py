@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 from app.core.database import BaseModel
 from app.models.user_model import UserModel
+from app.models.post_tag_model import PostTagModel
 from app.utils.date import get_now
 
 
@@ -21,3 +22,4 @@ class PostModel(BaseModel):
     updated_at = Column(DATETIME, nullable=True, default=get_now, onupdate=get_now)
 
     user = relationship('UserModel', foreign_keys='PostModel.user_id')
+    tags = relationship('TagModel', secondary=PostTagModel)
