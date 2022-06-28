@@ -58,11 +58,37 @@ def upgrade():
         Column('updated_at', DATETIME, nullable=True, default=get_now, onupdate=get_now)
     )
 
+    op.create_table(
+        'post_tag',
+        Column('id', INTEGER(unsigned=True), primary_key=True, index=True, autoincrement=True),
+        Column('post_id', INTEGER(unsigned=True)),
+        Column('tag_id', INTEGER(unsigned=True)),
+        Column('memo', VARCHAR(255), nullable=True),
+        Column('created_at', DATETIME, nullable=True, default=get_now),
+        Column('updated_at', DATETIME, nullable=True, default=get_now, onupdate=get_now),
+    )
+
     op.create_foreign_key(
         constraint_name='fk_post_user',
         source_table='post',
         referent_table='user',
         local_cols=['user_id'],
+        remote_cols=['id']
+    )
+
+    op.create_foreign_key(
+        constraint_name='fk_post_tag',
+        source_table='post_tag',
+        referent_table='post',
+        local_cols=['post_id'],
+        remote_cols=['id']
+    )
+
+    op.create_foreign_key(
+        constraint_name='fk_tag_post',
+        source_table='post_tag',
+        referent_table='tag',
+        local_cols=['tag_id'],
         remote_cols=['id']
     )
 
