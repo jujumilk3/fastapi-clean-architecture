@@ -6,13 +6,12 @@ from app.core.dependencies import get_current_active_user
 from app.core.security import JWTBearer
 from app.models.user_model import UserModel
 from app.schema.base_schema import Blank
-from app.schema.tag_schema import FindTag, Tag, UpsertTag, FindTagResult
+from app.schema.post_tag_schema import FindTag, Tag, UpsertTag, FindTagResult
 from app.services.tag_service import TagService
 
 router = APIRouter(
     prefix='/tag',
     tags=['tag'],
-    dependencies=[Depends(JWTBearer())]
 )
 
 
@@ -21,7 +20,6 @@ router = APIRouter(
 async def get_tag_list(
         find_query: FindTag = Depends(),
         service: TagService = Depends(Provide[Container.tag_service]),
-        current_user: UserModel = Depends(get_current_active_user)
 ):
     return service.get_list(find_query)
 
@@ -31,7 +29,6 @@ async def get_tag_list(
 async def get_tag(
         id: int,
         service: TagService = Depends(Provide[Container.tag_service]),
-        current_user: UserModel = Depends(get_current_active_user)
 ):
     return service.get_by_id(id)
 

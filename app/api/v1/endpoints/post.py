@@ -6,22 +6,20 @@ from app.core.dependencies import get_current_active_user
 from app.core.security import JWTBearer
 from app.models.user_model import UserModel
 from app.schema.base_schema import Blank
-from app.schema.post_schema import FindPost, Post, UpsertPost, FindPostResult
+from app.schema.post_tag_schema import FindPost, Post, UpsertPost, FindPostResult, FindPostWithTagsResult
 from app.services.post_service import PostService
 
 router = APIRouter(
     prefix='/post',
     tags=['post'],
-    dependencies=[Depends(JWTBearer())]
 )
 
 
-@router.get('', response_model=FindPostResult)
+@router.get('', response_model=FindPostWithTagsResult)
 @inject
 async def get_post_list(
         find_query: FindPost = Depends(),
         service: PostService = Depends(Provide[Container.post_service]),
-        current_user: UserModel = Depends(get_current_active_user)
 ):
     return service.get_list(find_query)
 
@@ -31,7 +29,6 @@ async def get_post_list(
 async def get_post(
         id: int,
         service: PostService = Depends(Provide[Container.post_service]),
-        current_user: UserModel = Depends(get_current_active_user)
 ):
     return service.get_by_id(id)
 
