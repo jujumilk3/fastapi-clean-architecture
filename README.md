@@ -2,7 +2,7 @@
 
 ## description
 Base FastAPI project for applying general RestAPI Application cases.
-![openapi-docs](./doc/images/openapi-docs.png)
+![openapi-docs](./doc/images/openapi-docs-v2.png)
 
 ## concept
 1. Minimal functionality.
