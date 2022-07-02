@@ -46,7 +46,7 @@ class Tag(ModelBaseInfo, BaseTag, metaclass=AllOptional):
 
 
 class FindTag(FindBase, BaseTag, metaclass=AllOptional):
-    ...
+    id__in: str
 
 
 class UpsertTag(BaseTag, metaclass=AllOptional):
@@ -69,11 +69,11 @@ class TagWithPosts(Tag):
     posts: Optional[List[Post]]
 
 
-class UpsertPostWithTags(ModelBaseInfo, UpsertPost):
+class UpsertPostWithTags(UpsertPost):
     tag_ids: Optional[List[int]]
 
 
-class UpsertTagWithPosts(ModelBaseInfo, UpsertTag):
+class UpsertTagWithPosts(UpsertTag):
     post_ids: Optional[List[int]]
 
 

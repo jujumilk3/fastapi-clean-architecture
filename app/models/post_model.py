@@ -22,4 +22,4 @@ class PostModel(BaseModel):
     updated_at = Column(DATETIME, nullable=True, default=get_now, onupdate=get_now)
 
     user = relationship('UserModel', foreign_keys='PostModel.user_id')
-    tags = relationship('TagModel', secondary=PostTagModel)
+    tags = relationship('TagModel', secondary=PostTagModel, overlaps='posts', lazy='joined')

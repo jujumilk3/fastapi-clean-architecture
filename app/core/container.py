@@ -25,6 +25,6 @@ class Container(containers.DeclarativeContainer):
     user_repository = providers.Factory(UserRepository, session_factory=db.provided.session)
 
     auth_service = providers.Factory(AuthService, user_repository=user_repository)
-    post_service = providers.Factory(PostService, post_repository=post_repository)
+    post_service = providers.Factory(PostService, post_repository=post_repository, tag_repository=tag_repository)
     tag_service = providers.Factory(TagService, tag_repository=tag_repository)
     user_service = providers.Factory(UserService, user_repository=user_repository)
