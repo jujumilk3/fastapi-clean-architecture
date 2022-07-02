@@ -27,6 +27,8 @@ class PostRepository(BaseRepository):
             session.query(self.model).filter(self.model.id == id).update(schema.dict(exclude_none=True))
             query = session.query(self.model).filter(self.model.id == id).first()
             if tags:
+                query.tags = []
+                session.flush()
                 query.tags = tags
             else:
                 query.tags = []
