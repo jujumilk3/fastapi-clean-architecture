@@ -4,8 +4,10 @@ from starlette.middleware.cors import CORSMiddleware
 from app.api.v1.routes import routers
 from app.core.config import settings
 from app.core.container import Container
+from app.utils.class_object import singleton
 
 
+@singleton
 class AppCreator:
     def __init__(self):
         # set app default
@@ -32,7 +34,7 @@ class AppCreator:
 
         # set routes
         @self.app.get('/')
-        def read_root():
+        def root():
             return "service is working"
 
         self.app.include_router(routers, prefix=settings.API_V1_STR)
