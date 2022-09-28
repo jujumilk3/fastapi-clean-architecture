@@ -14,6 +14,7 @@ class Container(containers.DeclarativeContainer):
             'app.api.v1.endpoints.post',
             'app.api.v1.endpoints.tag',
             'app.api.v1.endpoints.user',
+            'app.api.v2.endpoints.auth',
             'app.core.dependencies'
         ]
     )
