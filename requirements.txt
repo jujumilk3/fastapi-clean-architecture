@@ -36,6 +36,8 @@ rsa==4.8
 six==1.16.0
 sniffio==1.2.0
 SQLAlchemy==1.4.36
+sqlalchemy2-stubs==0.0.2a27
+sqlmodel==0.0.8
 starlette==0.20.4
 tomli==2.0.1
 typing_extensions==4.2.0
