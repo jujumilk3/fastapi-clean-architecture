@@ -24,7 +24,9 @@ class PostRepository(BaseRepository):
 
     def update_with_tags(self, id: int, schema: UpsertPostWithTags, tags):
         with self.session_factory() as session:
-            session.query(self.model).filter(self.model.id == id).update(schema.dict(exclude_none=True))
+            session.query(self.model).filter(self.model.id == id).update(
+                schema.dict(exclude_none=True)
+            )
             query = session.query(self.model).filter(self.model.id == id).first()
             if tags:
                 query.tags = []

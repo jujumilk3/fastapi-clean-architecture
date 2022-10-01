@@ -14,8 +14,8 @@ class AppCreator:
         # set app default
         self.app = FastAPI(
             title=settings.PROJECT_NAME,
-            openapi_url=f'{settings.API}/openapi.json',
-            version='0.0.1'
+            openapi_url=f"{settings.API}/openapi.json",
+            version="0.0.1",
         )
 
         # set db and container
@@ -29,12 +29,12 @@ class AppCreator:
                 CORSMiddleware,
                 allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
                 allow_credentials=True,
-                allow_methods=['*'],
-                allow_headers=['*'],
+                allow_methods=["*"],
+                allow_headers=["*"],
             )
 
         # set routes
-        @self.app.get('/')
+        @self.app.get("/")
         def root():
             return "service is working"
 
