@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session, joinedload
 
 from app.core.config import settings
 from app.core.exceptions import DuplicatedError, NotFoundError
-from app.utils.query_builder import dict_to_sqlalchemy_filter_options
+from app.util.query_builder import dict_to_sqlalchemy_filter_options
 
 
 class BaseRepository:
