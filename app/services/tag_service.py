@@ -1,4 +1,4 @@
-from app.repositories.tag_repository import TagRepository
+from app.repository.tag_repository import TagRepository
 from app.services.base_service import BaseService
 
 

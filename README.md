@@ -17,9 +17,9 @@ Base FastAPI project for applying general RestAPI Application cases.
 3. tag [post (n : n) tag]
 
 ## integrated with
-1. python3.9+
-2. fastapi 0.78.0
-3. database
+1. Python3.9+
+2. Fastapi 0.78.0
+3. Database
    1. MySQL5.7+
    2. Migration with alembic
    3. pytest with real DB
@@ -29,7 +29,7 @@ Base FastAPI project for applying general RestAPI Application cases.
    1. service-repository pattern
 5. JWT authentication
    1. role separation each enpoint
-6. deployment
+6. Deployment
    1. container environment(k8s, docker)
    2. raw WAS(Web Application Server)
 
@@ -37,9 +37,14 @@ Base FastAPI project for applying general RestAPI Application cases.
 1. db(alembic)
    1. `alembic upgrade head`: apply every migrations
    2. `alembic downgrade base`: rollback every migrations
-   3. `alembic revision -m "revision_name"`: create new migration 
+   3. `alembic revision --autogenerate -m "revision_name"`: create new migration 
    4. `alembic history`: get alembic revision history
-2. server
+2. How to migration
+   1. Create or modify models from `app/model/*.py`
+   2. `alembic revision --autogenerate -m "revision_name"`
+   3. Check auto generated migration file from `app/migrations/versions/*.py`
+   4. `alembic upgrade head`
+3. server
    1. `uvicorn app.main:app --reload`: base
    2. options
       1. host: `--host 0.0.0.0`

@@ -4,7 +4,7 @@ from typing import Callable
 from sqlalchemy.orm import Session
 
 from app.model.user import User
-from app.repositories.base_repository import BaseRepository
+from app.repository.base_repository import BaseRepository
 
 
 class UserRepository(BaseRepository):

@@ -3,14 +3,14 @@ from typing import Callable
 
 from sqlalchemy.orm import Session
 
-from app.model.post_model import PostModel
-from app.repositories.base_repository import BaseRepository
+from app.model.post import Post
+from app.repository.base_repository import BaseRepository
 from app.schema.post_tag_schema import UpsertPostWithTags
 
 
 class PostRepository(BaseRepository):
     def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]]):
-        super().__init__(session_factory, PostModel)
+        super().__init__(session_factory, Post)
 
     def create_with_tags(self, schema: UpsertPostWithTags, tags):
         with self.session_factory() as session:

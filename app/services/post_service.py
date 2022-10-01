@@ -1,5 +1,5 @@
-from app.repositories.post_repository import PostRepository
-from app.repositories.tag_repository import TagRepository
+from app.repository.post_repository import PostRepository
+from app.repository.tag_repository import TagRepository
 from app.schema.post_tag_schema import FindTag, UpsertPostWithTags
 from app.services.base_service import BaseService
 
