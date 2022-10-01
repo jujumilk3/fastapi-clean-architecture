@@ -5,12 +5,13 @@ from sqlalchemy import engine_from_config, pool
 from sqlmodel import SQLModel
 
 from app.core.config import settings
-# from app.model.post_tag import PostTag
-
+from app.model.post import Post
+from app.model.tag import Tag
 # model declaration for migration
 from app.model.user import User
-from app.model.tag import Tag
-from app.model.post import Post
+
+# from app.model.post_tag import PostTag
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

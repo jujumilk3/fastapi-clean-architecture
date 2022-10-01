@@ -1,6 +1,6 @@
-from app.model.base_model import BaseModel
-
 from sqlmodel import Field
+
+from app.model.base_model import BaseModel
 
 
 class Tag(BaseModel, table=True):
