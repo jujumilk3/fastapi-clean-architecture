@@ -1,7 +1,7 @@
 import os
+from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
-from typing import Any, Dict, List, Optional
 from pydantic import BaseSettings, validator
 
 load_dotenv()
@@ -14,18 +14,18 @@ class Settings(BaseSettings):
     API_V1_STR: str = '/api/v1'
     API_V2_STR: str = '/api/v2'
     PROJECT_NAME: str = 'fca-api'
-    ENV_DATABASE_MAPPER = {
+    ENV_DATABASE_MAPPER: dict = {
         'prod': 'fca',
         'staging': 'fca-staging',
         'dev': 'fca-dev',
         'test': 'fca-test'
     }
 
-    PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    PROJECT_ROOT: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
     # date
-    DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
-    DATE_FORMAT = '%Y-%m-%d'
+    DATETIME_FORMAT: str = '%Y-%m-%dT%H:%M:%S'
+    DATE_FORMAT: str = '%Y-%m-%d'
 
     # auth
     SECRET_KEY: str = os.getenv('SECRET_KEY', '')

@@ -1,13 +1,12 @@
-from dependency_injector.wiring import inject, Provide
+from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 
 from app.core.container import Container
 from app.core.dependencies import get_current_super_user
 from app.core.security import JWTBearer
 from app.schema.base_schema import Blank
-from app.schema.user_schema import FindUser, User, UpsertUser, FindUserResult
+from app.schema.user_schema import FindUser, FindUserResult, UpsertUser, User
 from app.services.user_service import UserService
-
 
 router = APIRouter(
     prefix='/user',

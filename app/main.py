@@ -21,7 +21,7 @@ class AppCreator:
         # set db and container
         self.container = Container()
         self.db = self.container.db()
-        # self.db.create_database()
+        self.db.create_database()
 
         # set cors
         if settings.BACKEND_CORS_ORIGINS:

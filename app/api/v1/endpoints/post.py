@@ -1,11 +1,12 @@
-from dependency_injector.wiring import inject, Provide
+from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 
 from app.core.container import Container
 from app.core.dependencies import get_current_active_user
-from app.models.user_model import UserModel
+from app.model.user import User
 from app.schema.base_schema import Blank
-from app.schema.post_tag_schema import FindPost, PostWithTags, UpsertPostWithTags, FindPostWithTagsResult
+from app.schema.post_tag_schema import (FindPost, FindPostWithTagsResult,
+                                        PostWithTags, UpsertPostWithTags)
 from app.services.post_service import PostService
 
 router = APIRouter(
@@ -37,7 +38,7 @@ async def get_post(
 async def create_post(
         post: UpsertPostWithTags,
         service: PostService = Depends(Provide[Container.post_service]),
-        current_user: UserModel = Depends(get_current_active_user)
+        current_user: User = Depends(get_current_active_user)
 ):
     return service.add(post)
 
@@ -48,7 +49,7 @@ async def update_post(
         id: int,
         post: UpsertPostWithTags,
         service: PostService = Depends(Provide[Container.post_service]),
-        current_user: UserModel = Depends(get_current_active_user)
+        current_user: User = Depends(get_current_active_user)
 ):
     return service.patch(id, post)
 
@@ -58,6 +59,6 @@ async def update_post(
 async def delete_post(
         id: int,
         service: PostService = Depends(Provide[Container.post_service]),
-        current_user: UserModel = Depends(get_current_active_user)
+        current_user: User = Depends(get_current_active_user)
 ):
     return service.remove_by_id(id)

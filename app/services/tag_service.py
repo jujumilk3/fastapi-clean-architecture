@@ -1,5 +1,5 @@
-from app.services.base_service import BaseService
 from app.repositories.tag_repository import TagRepository
+from app.services.base_service import BaseService
 
 
 class TagService(BaseService):

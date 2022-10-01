@@ -3,8 +3,8 @@ from typing import Callable
 
 from sqlalchemy.orm import Session
 
+from app.model.tag_model import TagModel
 from app.repositories.base_repository import BaseRepository
-from app.models.tag_model import TagModel
 
 
 class TagRepository(BaseRepository):

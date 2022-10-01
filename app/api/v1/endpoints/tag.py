@@ -1,12 +1,12 @@
-from dependency_injector.wiring import inject, Provide
+from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 
 from app.core.container import Container
 from app.core.dependencies import get_current_active_user
 from app.core.security import JWTBearer
-from app.models.user_model import UserModel
+from app.model.user import User
 from app.schema.base_schema import Blank
-from app.schema.post_tag_schema import FindTag, Tag, UpsertTag, FindTagResult
+from app.schema.post_tag_schema import FindTag, FindTagResult, Tag, UpsertTag
 from app.services.tag_service import TagService
 
 router = APIRouter(
@@ -38,7 +38,7 @@ async def get_tag(
 async def create_tag(
         tag: UpsertTag,
         service: TagService = Depends(Provide[Container.tag_service]),
-        current_user: UserModel = Depends(get_current_active_user)
+        current_user: User = Depends(get_current_active_user)
 ):
     return service.add(tag)
 
@@ -49,7 +49,7 @@ async def update_tag(
         id: int,
         tag: UpsertTag,
         service: TagService = Depends(Provide[Container.tag_service]),
-        current_user: UserModel = Depends(get_current_active_user)
+        current_user: User = Depends(get_current_active_user)
 ):
     return service.patch(id, tag)
 
@@ -59,6 +59,6 @@ async def update_tag(
 async def delete_tag(
         id: int,
         service: TagService = Depends(Provide[Container.tag_service]),
-        current_user: UserModel = Depends(get_current_active_user)
+        current_user: User = Depends(get_current_active_user)
 ):
     return service.remove_by_id(id)

@@ -1,11 +1,11 @@
-from dependency_injector.wiring import inject, Provide
+from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 
 from app.core.container import Container
 from app.core.dependencies import get_current_active_user
-from app.schema.auth_schema import SignIn, SignUp, SignInResponse
+from app.model.user import User
+from app.schema.auth_schema import SignIn, SignInResponse, SignUp
 from app.schema.user_schema import User as UserSchema
-from app.models.user_model import UserModel
 from app.services.auth_service import AuthService
 
 router = APIRouter(
@@ -35,7 +35,7 @@ async def sign_up(
 @router.get('/me', response_model=UserSchema)
 @inject
 async def get_me(
-    current_user: UserModel = Depends(get_current_active_user)
+    current_user: User = Depends(get_current_active_user)
 ):
     user = UserSchema()
     user.name = current_user.name
