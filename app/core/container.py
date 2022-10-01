@@ -1,8 +1,7 @@
 from dependency_injector import containers, providers
 
-from app.core.database import Database
 from app.core.config import settings
-
+from app.core.database import Database
 from app.repositories import *
 from app.services import *
 
@@ -14,6 +13,7 @@ class Container(containers.DeclarativeContainer):
             'app.api.v1.endpoints.post',
             'app.api.v1.endpoints.tag',
             'app.api.v1.endpoints.user',
+            'app.api.v2.endpoints.auth',
             'app.core.dependencies'
         ]
     )

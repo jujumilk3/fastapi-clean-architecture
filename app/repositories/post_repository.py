@@ -3,7 +3,7 @@ from typing import Callable
 
 from sqlalchemy.orm import Session
 
-from app.models.post_model import PostModel
+from app.model.post_model import PostModel
 from app.repositories.base_repository import BaseRepository
 from app.schema.post_tag_schema import UpsertPostWithTags
 

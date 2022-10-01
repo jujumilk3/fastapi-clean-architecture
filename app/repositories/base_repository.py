@@ -1,12 +1,12 @@
 from contextlib import AbstractContextManager
-
 from typing import Callable
+
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, joinedload
 
-from app.utils.query_builder import dict_to_sqlalchemy_filter_options
 from app.core.config import settings
-from app.core.exceptions import NotFoundError, DuplicatedError
+from app.core.exceptions import DuplicatedError, NotFoundError
+from app.utils.query_builder import dict_to_sqlalchemy_filter_options
 
 
 class BaseRepository:

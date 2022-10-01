@@ -1,9 +1,8 @@
 from sqlalchemy import Column, ForeignKey, Table
-from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, DATETIME
+from sqlalchemy.dialects.mysql import DATETIME, INTEGER, VARCHAR
 
 from app.core.database import BaseModel
 from app.utils.date import get_now
-
 
 PostTagModel = Table('post_tag', BaseModel.metadata,
                      Column('id', INTEGER(unsigned=True), primary_key=True, autoincrement=True),

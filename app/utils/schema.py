@@ -1,5 +1,6 @@
-from pydantic.main import ModelMetaclass
 from typing import Optional
+
+from pydantic.main import ModelMetaclass
 
 
 class AllOptional(ModelMetaclass):

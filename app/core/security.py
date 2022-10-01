@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from fastapi import Request
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt
 from passlib.context import CryptContext
 
