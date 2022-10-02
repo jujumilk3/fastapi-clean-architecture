@@ -3,8 +3,7 @@ from typing import List
 
 from app.core.config import settings
 from app.core.exceptions import AuthError
-from app.core.security import (create_access_token, get_password_hash,
-                               verify_password)
+from app.core.security import create_access_token, get_password_hash, verify_password
 from app.model.user import User
 from app.repository.user_repository import UserRepository
 from app.schema.auth_schema import Payload, SignIn, SignUp

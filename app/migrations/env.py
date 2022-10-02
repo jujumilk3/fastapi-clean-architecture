@@ -9,6 +9,7 @@ from app.core.config import settings
 from app.model.post import Post
 from app.model.tag import Tag
 from app.model.user import User
+from app.model.post_tag import PostTag
 
 cmd_kwargs = context.get_x_argument(as_dictionary=True)
 if "ENV" in cmd_kwargs:

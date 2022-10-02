@@ -6,6 +6,8 @@ from pydantic import BaseSettings, validator
 
 load_dotenv()
 
+ENV: str = ""
+
 
 class Settings(BaseSettings):
     # base
@@ -77,4 +79,15 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 
+class TestSettings(Settings):
+    ENV: str = "test"
+
+
 settings = Settings()
+
+if ENV == "prod":
+    pass
+elif ENV == "stage":
+    pass
+elif ENV == "test":
+    setting = TestSettings()

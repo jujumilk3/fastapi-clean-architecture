@@ -18,7 +18,8 @@ class Container(containers.DeclarativeContainer):
         ]
     )
 
-    db = providers.Singleton(Database, db_url=settings.DATABASE_URI)
+    print(settings.DATABASE_URI_MAPPER[settings.ENV])
+    db = providers.Singleton(Database, db_url=settings.DATABASE_URI_MAPPER[settings.ENV])
 
     post_repository = providers.Factory(
         PostRepository, session_factory=db.provided.session

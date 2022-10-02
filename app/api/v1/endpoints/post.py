@@ -6,8 +6,12 @@ from app.core.dependencies import get_current_active_user
 from app.model.post import Post
 from app.model.user import User
 from app.schema.base_schema import Blank
-from app.schema.post_tag_schema import (FindPost, FindPostWithTagsResult,
-                                        PostWithTags, UpsertPostWithTags)
+from app.schema.post_tag_schema import (
+    FindPost,
+    FindPostWithTagsResult,
+    PostWithTags,
+    UpsertPostWithTags,
+)
 from app.services.post_service import PostService
 
 router = APIRouter(
