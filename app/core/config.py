@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "fca-api"
     ENV_DATABASE_MAPPER: dict = {
         "prod": "fca",
-        "staging": "fca-staging",
+        "stage": "fca-stage",
         "dev": "fca-dev",
         "test": "fca-test",
     }
@@ -46,6 +46,17 @@ class Settings(BaseSettings):
     MYSQL_DATABASE: str = ENV_DATABASE_MAPPER.get(ENV, "fca-dev")
     DATABASE_URI: Optional[str] = os.getenv("DATABASE_URI")
 
+    DATABASE_URI_FORMAT: str = "mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+    DATABASE_URI_MAPPER: dict = dict()
+    for env in ENV_DATABASE_MAPPER:
+        DATABASE_URI_MAPPER[env] = DATABASE_URI_FORMAT.format(
+            user=MYSQL_USER,
+            password=MYSQL_PASSWORD,
+            host=MYSQL_HOST,
+            port=MYSQL_PORT,
+            database=ENV_DATABASE_MAPPER[env],
+        )
+
     @validator("DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         if isinstance(v, str):
@@ -57,7 +68,7 @@ class Settings(BaseSettings):
 
     # find query
     PAGE = 1
-    PAGE_SIZE = 10
+    PAGE_SIZE = 20
     ORDERING = "-id"
 
     class Config:

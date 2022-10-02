@@ -1,3 +1,4 @@
+import os
 from logging.config import fileConfig
 
 from alembic import context
@@ -7,17 +8,20 @@ from sqlmodel import SQLModel
 from app.core.config import settings
 from app.model.post import Post
 from app.model.tag import Tag
-# model declaration for migration
 from app.model.user import User
 
-# from app.model.post_tag import PostTag
-
+cmd_kwargs = context.get_x_argument(as_dictionary=True)
+if "ENV" in cmd_kwargs:
+    os.environ["ENV"] = cmd_kwargs["ENV"]
+    ENV = cmd_kwargs["ENV"]
+else:
+    ENV = "test"
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 if not config.get_main_option("sqlalchemy.url"):
-    config.set_main_option("sqlalchemy.url", settings.DATABASE_URI)
+    config.set_main_option("sqlalchemy.url", settings.DATABASE_URI_MAPPER[ENV])
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -36,13 +40,7 @@ target_metadata = SQLModel.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
-cmd_kwargs = context.get_x_argument(as_dictionary=True)
-if "db" in cmd_kwargs:
-    db_name = cmd_kwargs["db"]
-else:
-    db_name = "dev"
-
-
+# exclude system table
 def include_name(name, type_, parent_names):
     return False
 

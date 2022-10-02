@@ -9,6 +9,7 @@ from app.repository.user_repository import UserRepository
 from app.schema.auth_schema import Payload, SignIn, SignUp
 from app.schema.user_schema import BaseUser, FindUser, User
 from app.services.base_service import BaseService
+from app.util.hash import get_rand_hash
 
 
 class AuthService(BaseService):
@@ -46,8 +47,12 @@ class AuthService(BaseService):
         return sign_in_result
 
     def sign_up(self, user_info: SignUp):
+        user_token = get_rand_hash()
         user = BaseUser(
-            **user_info.dict(exclude_none=True), is_active=True, is_superuser=False
+            **user_info.dict(exclude_none=True),
+            is_active=True,
+            is_superuser=False,
+            user_token=user_token
         )
         user.password = get_password_hash(user_info.password)
         created_user = self.user_repository.create(user)

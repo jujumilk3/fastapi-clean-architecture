@@ -41,9 +41,10 @@ Base FastAPI project for applying general RestAPI Application cases.
    4. `alembic history`: get alembic revision history
 2. How to migration
    1. Create or modify models from `app/model/*.py`
-   2. `alembic revision --autogenerate -m "revision_name"`
+   2. `alembic -x ENV=[dev|stage|prod] revision --autogenerate -m "revision_name"`
    3. Check auto generated migration file from `app/migrations/versions/*.py`
-   4. `alembic upgrade head`
+   4. `alembic -x ENV=[dev|stage|prod] upgrade head`  
+      If ENV does not exist, it will be applied to the test.
 3. server
    1. `uvicorn app.main:app --reload`: base
    2. options

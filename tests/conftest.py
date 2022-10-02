@@ -1,5 +1,4 @@
 import os
-from os import getenv
 
 import pytest
 from fastapi.testclient import TestClient
@@ -8,8 +7,8 @@ from app.main import app
 
 os.environ["ENV"] = "test"
 
-if getenv("ENV") not in ["test"]:
-    msg = f"ENV is not test, it is {getenv('ENV')}"
+if os.getenv("ENV") not in ["test"]:
+    msg = f"ENV is not test, it is {os.getenv('ENV')}"
     pytest.exit(msg)
 
 

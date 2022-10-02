@@ -9,6 +9,7 @@ from app.util.schema import AllOptional
 class BaseUser(BaseModel):
     email: str
     password: str
+    user_token: str
     name: str
     is_active: bool
     is_superuser: bool
