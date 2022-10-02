@@ -8,7 +8,6 @@ from app.util.schema import AllOptional
 
 class BaseUser(BaseModel):
     email: str
-    password: str
     user_token: str
     name: str
     is_active: bool
@@ -16,6 +15,10 @@ class BaseUser(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class BaseUserWithPassword(BaseUser):
+    password: str
 
 
 class User(ModelBaseInfo, BaseUser, metaclass=AllOptional):

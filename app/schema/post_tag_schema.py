@@ -8,6 +8,7 @@ from app.util.schema import AllOptional
 
 
 class BasePost(BaseModel):
+    user_token: str
     title: str
     content: str
     is_published: bool
@@ -34,6 +35,7 @@ class FindPostResult(BaseModel):
 
 
 class BaseTag(BaseModel):
+    user_token: str
     name: str
     description: str
 

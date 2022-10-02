@@ -46,7 +46,9 @@ class Settings(BaseSettings):
     MYSQL_DATABASE: str = ENV_DATABASE_MAPPER.get(ENV, "fca-dev")
     DATABASE_URI: Optional[str] = os.getenv("DATABASE_URI")
 
-    DATABASE_URI_FORMAT: str = "mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+    DATABASE_URI_FORMAT: str = (
+        "mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+    )
     DATABASE_URI_MAPPER: dict = dict()
     for env in ENV_DATABASE_MAPPER:
         DATABASE_URI_MAPPER[env] = DATABASE_URI_FORMAT.format(

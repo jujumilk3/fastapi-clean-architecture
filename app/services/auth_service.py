@@ -5,9 +5,10 @@ from app.core.config import settings
 from app.core.exceptions import AuthError
 from app.core.security import (create_access_token, get_password_hash,
                                verify_password)
+from app.model.user import User
 from app.repository.user_repository import UserRepository
 from app.schema.auth_schema import Payload, SignIn, SignUp
-from app.schema.user_schema import BaseUser, FindUser, User
+from app.schema.user_schema import FindUser
 from app.services.base_service import BaseService
 from app.util.hash import get_rand_hash
 
@@ -48,7 +49,7 @@ class AuthService(BaseService):
 
     def sign_up(self, user_info: SignUp):
         user_token = get_rand_hash()
-        user = BaseUser(
+        user = User(
             **user_info.dict(exclude_none=True),
             is_active=True,
             is_superuser=False,
