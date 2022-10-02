@@ -16,17 +16,17 @@ from sqlmodel import create_engine, SQLModel
 from loguru import logger
 
 
-@pytest.fixture(scope="session")
-async def reset_db():
+def reset_db():
     engine = create_engine(settings.DATABASE_URI_MAPPER["test"])
     logger.info(engine)
     with engine.begin() as conn:
-        await SQLModel.metadata.drop_all(conn)
-        await SQLModel.metadata.create_all(conn)
+        SQLModel.metadata.drop_all(conn)
+        SQLModel.metadata.create_all(conn)
     return engine
 
 
 @pytest.fixture
 def client():
+    reset_db()
     with TestClient(app) as client:
         yield client
