@@ -2,7 +2,6 @@ import os
 
 import pytest
 
-
 os.environ["ENV"] = "test"
 
 if os.getenv("ENV") not in ["test"]:
@@ -10,10 +9,11 @@ if os.getenv("ENV") not in ["test"]:
     pytest.exit(msg)
 
 from fastapi.testclient import TestClient
-from app.main import app
-from app.core.config import settings
-from sqlmodel import create_engine, SQLModel
 from loguru import logger
+from sqlmodel import SQLModel, create_engine
+
+from app.core.config import settings
+from app.main import app
 
 
 def reset_db():

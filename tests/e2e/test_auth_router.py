@@ -22,4 +22,3 @@ def test_sign_up_and_sign_in(client):
     assert response_json["user_info"]["id"] > 0
     assert response_json["user_info"]["user_token"] == user_token
     assert response_json["access_token"] is not None
-
