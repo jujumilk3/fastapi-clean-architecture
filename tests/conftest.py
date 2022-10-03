@@ -13,7 +13,8 @@ from loguru import logger
 from sqlmodel import SQLModel, create_engine
 
 from app.core.config import settings
-from app.main import app
+from app.main import AppCreator
+from app.core.container import Container
 
 
 def reset_db():
@@ -28,5 +29,12 @@ def reset_db():
 @pytest.fixture
 def client():
     reset_db()
+    app_creator = AppCreator()
+    app = app_creator.app
     with TestClient(app) as client:
         yield client
+
+
+@pytest.fixture
+def container():
+    return Container()
