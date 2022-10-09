@@ -1,0 +1,20 @@
+[
+  {
+    "user_token": "test1",
+    "title": "test1",
+    "content": "test1",
+    "is_published": true
+  },
+  {
+    "user_token": "test2",
+    "title": "test2",
+    "content": "test2",
+    "is_published": true
+  },
+  {
+    "user_token": "test_super",
+    "title": "test_super",
+    "content": "test_super",
+    "is_published": true
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "test1",
+    "email": "test1@test1.com",
+    "user_token": "test1",
+    "password": "test1",
+    "is_active": true,
+    "is_superuser": false
+  },
+  {
+    "name": "test2",
+    "email": "test2@test2.com",
+    "user_token": "test2",
+    "password": "test2",
+    "is_active": true,
+    "is_superuser": false
+  },
+  {
+    "name": "test_super",
+    "email": "test_super@test_super.com",
+    "user_token": "test_super",
+    "password": "test_super",
+    "is_active": true,
+    "is_superuser": true
+  }
+]

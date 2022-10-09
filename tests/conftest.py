@@ -1,3 +1,4 @@
+import json
 import os
 
 import pytest
@@ -13,8 +14,39 @@ from loguru import logger
 from sqlmodel import SQLModel, create_engine
 
 from app.core.config import settings
-from app.main import AppCreator
 from app.core.container import Container
+from app.main import AppCreator
+from app.model.user import User
+from app.model.post import Post
+
+
+def insert_default_data(conn):
+    user_default_file = open("./tests/default_insert_data/users.json", "r")
+    user_default_data = json.load(user_default_file)
+    for user in user_default_data:
+        conn.execute(
+            User.__table__.insert(),
+            {
+                "email": user["email"],
+                "password": user["password"],
+                "user_token": user["user_token"],
+                "name": user["name"],
+                "is_active": user["is_active"],
+                "is_superuser": user["is_superuser"],
+            },
+        )
+    post_default_file = open("./tests/default_insert_data/posts.json", "r")
+    post_default_data = json.load(post_default_file)
+    for post in post_default_data:
+        conn.execute(
+            Post.__table__.insert(),
+            {
+                "title": post["title"],
+                "content": post["content"],
+                "user_token": post["user_token"],
+                "is_published": post["is_published"],
+            },
+        )
 
 
 def reset_db():
@@ -23,6 +55,7 @@ def reset_db():
     with engine.begin() as conn:
         SQLModel.metadata.drop_all(conn)
         SQLModel.metadata.create_all(conn)
+        insert_default_data(conn)
     return engine
 
 
