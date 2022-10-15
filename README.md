@@ -50,6 +50,10 @@ Base FastAPI project for applying general RestAPI Application cases.
    2. options
       1. host: `--host 0.0.0.0`
       2. port: `--port 8000`
+4. test
+   1. `pytest`: base 
+   2. `pytest --cov=app --cov-report=term-missing`: coverage with stdout
+   3. `pytest --cov=app --cov-report=html`: coverage with html
 
 ## sample env
 ```dotenv
