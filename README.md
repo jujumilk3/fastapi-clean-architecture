@@ -28,7 +28,7 @@ Base FastAPI project for applying general RestAPI Application cases.
 4. dependency-injector
    1. service-repository pattern
 5. JWT authentication
-   1. role separation each enpoint
+   1. role separation each endpoint
 6. Deployment
    1. container environment(k8s, docker)
    2. raw WAS(Web Application Server)
