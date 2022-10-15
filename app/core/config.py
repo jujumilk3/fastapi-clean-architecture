@@ -22,6 +22,10 @@ class Settings(BaseSettings):
         "dev": "fca-dev",
         "test": "fca-test",
     }
+    DB_ENGINE_MAPPER: dict = {
+        "postgresql": "postgresql",
+        "mysql": "mysql+pymysql",
+    }
 
     PROJECT_ROOT: str = os.path.dirname(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,23 +45,27 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: List[str] = ["*"]
 
     # database
-    MYSQL_USER: str = os.getenv("MYSQL_USER")
-    MYSQL_PASSWORD: str = os.getenv("MYSQL_PASSWORD")
-    MYSQL_HOST: str = os.getenv("MYSQL_HOST")
-    MYSQL_PORT: str = os.getenv("MYSQL_PORT", "3306")
-    MYSQL_DATABASE: str = ENV_DATABASE_MAPPER.get(ENV, "fca-dev")
+    DB: str = os.getenv("DB", "postgresql")
+    DB_USER: str = os.getenv("DB_USER")
+    DB_PASSWORD: str = os.getenv("DB_PASSWORD")
+    DB_HOST: str = os.getenv("DB_HOST")
+    DB_PORT: str = os.getenv("DB_PORT", "3306")
+    DB_DATABASE: str = ENV_DATABASE_MAPPER.get(ENV, "fca-dev")
     DATABASE_URI: Optional[str] = os.getenv("DATABASE_URI")
+    DB_ENGINE: str = DB_ENGINE_MAPPER.get(DB, "postgresql")
 
     DATABASE_URI_FORMAT: str = (
-        "mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+        "{db_engine}://{user}:{password}@{host}:{port}/{database}"
     )
+
     DATABASE_URI_MAPPER: dict = dict()
     for env in ENV_DATABASE_MAPPER:
         DATABASE_URI_MAPPER[env] = DATABASE_URI_FORMAT.format(
-            user=MYSQL_USER,
-            password=MYSQL_PASSWORD,
-            host=MYSQL_HOST,
-            port=MYSQL_PORT,
+            db_engine=DB_ENGINE,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT,
             database=ENV_DATABASE_MAPPER[env],
         )
 
@@ -66,8 +74,8 @@ class Settings(BaseSettings):
         if isinstance(v, str):
             return v
         return (
-            f"mysql+pymysql://{values.get('MYSQL_USER')}:{values.get('MYSQL_PASSWORD')}@"
-            f"{values.get('MYSQL_HOST')}:{values.get('MYSQL_PORT')}/{values.get('MYSQL_DATABASE')}"
+            f"{values.get('DB_ENGINE')}://{values.get('DB_USER')}:{values.get('DB_PASSWORD')}@"
+            f"{values.get('DB_HOST')}:{values.get('DB_PORT')}/{values.get('DB_DATABASE')}"
         )
 
     # find query

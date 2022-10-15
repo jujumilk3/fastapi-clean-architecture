@@ -53,11 +53,21 @@ Base FastAPI project for applying general RestAPI Application cases.
 
 ## sample env
 ```dotenv
+# mysql case
 ENV=dev
-MYSQL_USER=root
-MYSQL_PASSWORD=qwer1234
-MYSQL_HOST=localhost
-MYSQL_PORT=3306
+DB=mysql
+DB_USER=root
+DB_PASSWORD=qwer1234
+DB_HOST=localhost
+DB_PORT=3306
+
+# postgres case
+ENV=dev
+DB=postgresql
+DB_USER=gyu
+DB_PASSWORD=
+DB_HOST=localhost
+DB_PORT=5432
 ```
 
 ## references
