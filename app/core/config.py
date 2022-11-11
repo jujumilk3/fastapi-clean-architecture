@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "fca-api"
     ENV_DATABASE_MAPPER: dict = {
         "prod": "fca",
-        "stage": "fca-stage",
-        "dev": "fca-dev",
-        "test": "fca-test",
+        "stage": "stage-fca",
+        "dev": "dev-fca",
+        "test": "test-fca",
     }
     DB_ENGINE_MAPPER: dict = {
         "postgresql": "postgresql",
@@ -50,7 +50,7 @@ class Settings(BaseSettings):
     DB_PASSWORD: str = os.getenv("DB_PASSWORD")
     DB_HOST: str = os.getenv("DB_HOST")
     DB_PORT: str = os.getenv("DB_PORT", "3306")
-    DB_DATABASE: str = ENV_DATABASE_MAPPER.get(ENV, "fca-dev")
+    DB_DATABASE: str = ENV_DATABASE_MAPPER.get(ENV, "dev-fca")
     DATABASE_URI: Optional[str] = os.getenv("DATABASE_URI")
     DB_ENGINE: str = DB_ENGINE_MAPPER.get(DB, "postgresql")
 
