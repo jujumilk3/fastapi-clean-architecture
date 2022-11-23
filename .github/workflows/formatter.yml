@@ -1,0 +1,32 @@
+name: Apply black & isort
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.head_ref }}
+      - name: black and isort
+        run: |
+          pip install black isort
+          black . -l 120
+          isort . -l 120 --profile black
+
+      - name: Check for modified files
+        id: git-check
+        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_ENV
+
+      - name: Push changes
+        if: env.modified == 'true'
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'noreply@github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Automated fixes"
+          git push
