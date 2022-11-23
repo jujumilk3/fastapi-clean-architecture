@@ -18,23 +18,13 @@ class Container(containers.DeclarativeContainer):
         ]
     )
 
-    db = providers.Singleton(
-        Database, db_url=settings.DATABASE_URI_MAPPER[settings.ENV]
-    )
+    db = providers.Singleton(Database, db_url=settings.DATABASE_URI_MAPPER[settings.ENV])
 
-    post_repository = providers.Factory(
-        PostRepository, session_factory=db.provided.session
-    )
-    tag_repository = providers.Factory(
-        TagRepository, session_factory=db.provided.session
-    )
-    user_repository = providers.Factory(
-        UserRepository, session_factory=db.provided.session
-    )
+    post_repository = providers.Factory(PostRepository, session_factory=db.provided.session)
+    tag_repository = providers.Factory(TagRepository, session_factory=db.provided.session)
+    user_repository = providers.Factory(UserRepository, session_factory=db.provided.session)
 
     auth_service = providers.Factory(AuthService, user_repository=user_repository)
-    post_service = providers.Factory(
-        PostService, post_repository=post_repository, tag_repository=tag_repository
-    )
+    post_service = providers.Factory(PostService, post_repository=post_repository, tag_repository=tag_repository)
     tag_service = providers.Factory(TagService, tag_repository=tag_repository)
     user_service = providers.Factory(UserService, user_repository=user_repository)

@@ -34,13 +34,9 @@ def dict_to_sqlalchemy_filter_options(model_class, search_option_dict):
             continue
         option_from_dict = copied_dict[custom_option]
         if command == "in":
-            sql_alchemy_filter_options.append(
-                attr.in_([option.strip() for option in option_from_dict.split(",")])
-            )
+            sql_alchemy_filter_options.append(attr.in_([option.strip() for option in option_from_dict.split(",")]))
         elif command in SQLALCHEMY_QUERY_MAPPER.keys():
-            sql_alchemy_filter_options.append(
-                getattr(attr, SQLALCHEMY_QUERY_MAPPER[command])(option_from_dict)
-            )
+            sql_alchemy_filter_options.append(getattr(attr, SQLALCHEMY_QUERY_MAPPER[command])(option_from_dict))
         elif command == "isnull":
             bool_command = "__eq__" if option_from_dict else "__ne__"
             sql_alchemy_filter_options.append(getattr(attr, bool_command)(None))

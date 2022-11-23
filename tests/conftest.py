@@ -16,8 +16,8 @@ from sqlmodel import SQLModel, create_engine
 from app.core.config import settings
 from app.core.container import Container
 from app.main import AppCreator
-from app.model.user import User
 from app.model.post import Post
+from app.model.user import User
 
 
 def insert_default_data(conn):

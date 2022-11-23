@@ -36,9 +36,7 @@ class AuthService(BaseService):
             is_superuser=found_user.is_superuser,
         )
         token_lifespan = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-        access_token, expiration_datetime = create_access_token(
-            payload.dict(), token_lifespan
-        )
+        access_token, expiration_datetime = create_access_token(payload.dict(), token_lifespan)
         sign_in_result = {
             "access_token": access_token,
             "expiration": expiration_datetime,
@@ -48,12 +46,7 @@ class AuthService(BaseService):
 
     def sign_up(self, user_info: SignUp):
         user_token = get_rand_hash()
-        user = User(
-            **user_info.dict(exclude_none=True),
-            is_active=True,
-            is_superuser=False,
-            user_token=user_token
-        )
+        user = User(**user_info.dict(exclude_none=True), is_active=True, is_superuser=False, user_token=user_token)
         user.password = get_password_hash(user_info.password)
         created_user = self.user_repository.create(user)
         delattr(created_user, "password")

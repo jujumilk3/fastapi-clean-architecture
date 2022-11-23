@@ -27,9 +27,7 @@ class Settings(BaseSettings):
         "mysql": "mysql+pymysql",
     }
 
-    PROJECT_ROOT: str = os.path.dirname(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    )
+    PROJECT_ROOT: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
     # date
     DATETIME_FORMAT: str = "%Y-%m-%dT%H:%M:%S"
@@ -37,9 +35,7 @@ class Settings(BaseSettings):
 
     # auth
     SECRET_KEY: str = os.getenv("SECRET_KEY", "")
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = (
-        60 * 24 * 30
-    )  # 60 minutes * 24 hours * 30 days = 30 days
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30  # 60 minutes * 24 hours * 30 days = 30 days
 
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = ["*"]
@@ -54,9 +50,7 @@ class Settings(BaseSettings):
     DATABASE_URI: Optional[str] = os.getenv("DATABASE_URI")
     DB_ENGINE: str = DB_ENGINE_MAPPER.get(DB, "postgresql")
 
-    DATABASE_URI_FORMAT: str = (
-        "{db_engine}://{user}:{password}@{host}:{port}/{database}"
-    )
+    DATABASE_URI_FORMAT: str = "{db_engine}://{user}:{password}@{host}:{port}/{database}"
 
     DATABASE_URI_MAPPER: dict = dict()
     for env in ENV_DATABASE_MAPPER:

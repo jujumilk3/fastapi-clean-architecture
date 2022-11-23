@@ -15,17 +15,13 @@ router = APIRouter(
 
 @router.post("/sign-in", response_model=SignInResponse)
 @inject
-async def sign_in(
-    user_info: SignIn, service: AuthService = Depends(Provide[Container.auth_service])
-):
+async def sign_in(user_info: SignIn, service: AuthService = Depends(Provide[Container.auth_service])):
     return service.sign_in(user_info)
 
 
 @router.post("/sign-up", response_model=User)
 @inject
-async def sign_up(
-    user_info: SignUp, service: AuthService = Depends(Provide[Container.auth_service])
-):
+async def sign_up(user_info: SignUp, service: AuthService = Depends(Provide[Container.auth_service])):
     return service.sign_up(user_info)
 
 

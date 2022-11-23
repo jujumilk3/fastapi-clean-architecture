@@ -10,9 +10,7 @@ from app.util.query_builder import dict_to_sqlalchemy_filter_options
 
 
 class BaseRepository:
-    def __init__(
-        self, session_factory: Callable[..., AbstractContextManager[Session]], model
-    ) -> None:
+    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]], model) -> None:
         self.session_factory = session_factory
         self.model = model
 
@@ -27,9 +25,7 @@ class BaseRepository:
             )
             page = schema_as_dict.get("page", settings.PAGE)
             page_size = schema_as_dict.get("page_size", settings.PAGE_SIZE)
-            filter_options = dict_to_sqlalchemy_filter_options(
-                self.model, schema.dict(exclude_none=True)
-            )
+            filter_options = dict_to_sqlalchemy_filter_options(self.model, schema.dict(exclude_none=True))
             query = session.query(self.model)
             if eager:
                 for eager in getattr(self.model, "eagers", []):
@@ -75,17 +71,13 @@ class BaseRepository:
 
     def update(self, id: int, schema):
         with self.session_factory() as session:
-            session.query(self.model).filter(self.model.id == id).update(
-                schema.dict(exclude_none=True)
-            )
+            session.query(self.model).filter(self.model.id == id).update(schema.dict(exclude_none=True))
             session.commit()
             return self.read_by_id(id)
 
     def update_attr(self, id: int, column: str, value):
         with self.session_factory() as session:
-            session.query(self.model).filter(self.model.id == id).update(
-                {column: value}
-            )
+            session.query(self.model).filter(self.model.id == id).update({column: value})
             session.commit()
             return self.read_by_id(id)
 
