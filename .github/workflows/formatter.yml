@@ -3,7 +3,7 @@ name: Apply black & isort
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   format:
