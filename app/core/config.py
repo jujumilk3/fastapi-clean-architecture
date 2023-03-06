@@ -1,33 +1,19 @@
 import os
-from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
-from pydantic import BaseSettings, validator
 
 load_dotenv()
 
 ENV: str = ""
 
 
-class Settings(BaseSettings):
+class BaseConfigs:
     # base
-    ENV: str = os.getenv("ENV", "dev")
+    ENV: str = os.getenv("ENV", "test")
     API: str = "/api"
     API_V1_STR: str = "/api/v1"
     API_V2_STR: str = "/api/v2"
     PROJECT_NAME: str = "fca-api"
-    ENV_DATABASE_MAPPER: dict = {
-        "prod": "fca",
-        "stage": "stage-fca",
-        "dev": "dev-fca",
-        "test": "test-fca",
-    }
-    DB_ENGINE_MAPPER: dict = {
-        "postgresql": "postgresql",
-        "mysql": "mysql+pymysql",
-    }
-
-    PROJECT_ROOT: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
     # date
     DATETIME_FORMAT: str = "%Y-%m-%dT%H:%M:%S"
@@ -38,39 +24,22 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30  # 60 minutes * 24 hours * 30 days = 30 days
 
     # CORS
-    BACKEND_CORS_ORIGINS: List[str] = ["*"]
+    BACKEND_CORS_ORIGINS: list[str] = ["*"]
 
     # database
-    DB: str = os.getenv("DB", "postgresql")
-    DB_USER: str = os.getenv("DB_USER")
-    DB_PASSWORD: str = os.getenv("DB_PASSWORD")
-    DB_HOST: str = os.getenv("DB_HOST")
-    DB_PORT: str = os.getenv("DB_PORT", "3306")
-    DB_DATABASE: str = ENV_DATABASE_MAPPER.get(ENV, "dev-fca")
-    DATABASE_URI: Optional[str] = os.getenv("DATABASE_URI")
-    DB_ENGINE: str = DB_ENGINE_MAPPER.get(DB, "postgresql")
+    DB_NAME: str = os.getenv("DB_NAME", "fca-test")
+    DB_USER: str = os.getenv("DB_USER", "")
+    DB_PASSWORD: str = os.getenv("DB_PASSWORD", "")
+    DB_HOST: str = os.getenv("DB_HOST", "localhost")
+    DB_PORT: str = os.getenv("DB_PORT", "5432")
 
-    DATABASE_URI_FORMAT: str = "{db_engine}://{user}:{password}@{host}:{port}/{database}"
-
-    DATABASE_URI_MAPPER: dict = dict()
-    for env in ENV_DATABASE_MAPPER:
-        DATABASE_URI_MAPPER[env] = DATABASE_URI_FORMAT.format(
-            db_engine=DB_ENGINE,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            database=ENV_DATABASE_MAPPER[env],
-        )
-
-    @validator("DATABASE_URI", pre=True)
-    def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
-        if isinstance(v, str):
-            return v
-        return (
-            f"{values.get('DB_ENGINE')}://{values.get('DB_USER')}:{values.get('DB_PASSWORD')}@"
-            f"{values.get('DB_HOST')}:{values.get('DB_PORT')}/{values.get('DB_DATABASE')}"
-        )
+    DATABASE_URL: str = "postgresql+asyncpg://{user}:{password}@{host}:{port}/{database}".format(
+        user=DB_USER,
+        password=DB_PASSWORD,
+        host=DB_HOST,
+        port=DB_PORT,
+        database=DB_NAME,
+    )
 
     # find query
     PAGE = 1
@@ -81,15 +50,19 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 
-class TestSettings(Settings):
+class TestSettings(BaseConfigs):
     ENV: str = "test"
 
 
-settings = Settings()
+settings = BaseConfigs
+configs = BaseConfigs
 
 if ENV == "prod":
     pass
 elif ENV == "stage":
     pass
+elif ENV == "dev":
+    configs = BaseConfigs
 elif ENV == "test":
-    setting = TestSettings()
+    configs = TestSettings
+    setting = TestSettings

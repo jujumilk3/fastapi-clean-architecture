@@ -20,7 +20,7 @@ Base FastAPI project for applying general RestAPI Application cases.
 1. Python3.10+
 2. Fastapi 0.78.0
 3. Database
-   1. MySQL5.7+
+   1. PostgreSQL
    2. Migration with alembic
    3. pytest with real DB
    4. Load with two ways (eager, lazy)
@@ -57,17 +57,9 @@ Base FastAPI project for applying general RestAPI Application cases.
 
 ## sample env
 ```dotenv
-# mysql case
-ENV=dev
-DB=mysql
-DB_USER=root
-DB_PASSWORD=qwer1234
-DB_HOST=localhost
-DB_PORT=3306
-
 # postgres case
 ENV=dev
-DB=postgresql
+DB_NAME=fca
 DB_USER=gyu
 DB_PASSWORD=
 DB_HOST=localhost
