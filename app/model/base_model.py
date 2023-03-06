@@ -18,14 +18,14 @@ class Base(DeclarativeBase):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False, server_default=func.now(), default=datetime.utcnow
+        DateTime(timezone=True), nullable=False, server_default=func.now(), default=datetime.now(pytz.utc)
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
         server_default=func.now(),
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow,
+        default=datetime.now(pytz.utc),
+        onupdate=datetime.now(pytz.utc),
     )
 
 
@@ -38,15 +38,15 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(default=False, nullable=False)
     is_superuser: Mapped[bool] = mapped_column(default=False, nullable=False)
 
-
-Base2 = declarative_base()
-
-class MyModel(Base2):
-    __tablename__ = 'mymodel'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    created_at = Column(DateTime(timezone=True), default=datetime.now(pytz.utc))
+#
+# Base2 = declarative_base()
+#
+# class MyModel(Base2):
+#     __tablename__ = 'mymodel'
+#
+#     id = Column(Integer, primary_key=True)
+#     name = Column(String)
+#     created_at = Column(DateTime(timezone=True), default=func.now())
 
 
 if __name__ == "__main__":
@@ -54,27 +54,37 @@ if __name__ == "__main__":
     from sqlalchemy.orm import sessionmaker
 
     engine = create_engine("sqlite:///:memory:", echo=True)
-    Base.metadata.create_all(engine)
+    #postgres engine
+    engine = create_engine("postgresql://damon:@localhost:5432/fca", echo=True)
+    # Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-    session.add(User(email="test@test.com", password="test", user_token="test"))
-    session.commit()
-    print(session.query(User).all())
-    user = session.query(User).first()
-    print(user.__dict__)
-    print(user.created_at)
-    print(user.updated_at)
-    import pytz
-    created_at = user.created_at.astimezone(pytz.timezone("Asia/Seoul"))
-    print(created_at)
-
-
+    # session.add(User(email="test3@test.com", password="test3", user_token="test3"))
+    # session.commit()
+    # print(session.query(User).all())
+    # user = session.query(User).first()
+    # print(user.__dict__)
+    # print(user.created_at)
+    # print(user.updated_at)
+    # import pytz
+    #
+    # print(user.created_at.astimezone(pytz.timezone("Asia/Seoul")))
+    # print(user.created_at)
+    # # print with timezone
+    # print(user.created_at.astimezone())
+    users = session.query(User).all()
+    for user in users:
+        print(user.created_at.astimezone(pytz.utc))
+        print(user.updated_at)
     # create tables
-    Base2.metadata.create_all(engine)
-    session.add(MyModel(name="test"))
-    session.commit()
-    print(session.query(MyModel).all())
-    mymodel = session.query(MyModel).first()
-    print(mymodel.__dict__)
-    print(mymodel.created_at)
+    # Base2.metadata.create_all(engine)
+    # session.add(MyModel(name="test"))
+    # session.commit()
+    # print(session.query(MyModel).all())
+    # mymodel = session.query(MyModel).first()
+    # print(mymodel.__dict__)
+    # print(mymodel.created_at)
+    # print(mymodel.created_at.astimezone())
+    # print(mymodel.created_at.astimezone(pytz.utc))
+
 
