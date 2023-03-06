@@ -18,6 +18,7 @@ loguru = "^0.6.0"
 anyio = "^3.6.2"
 httpx = "^0.23.3"
 passlib = "^1.7.4"
+bcrypt = "^4.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
