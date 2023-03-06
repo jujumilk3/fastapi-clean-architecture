@@ -1,11 +1,10 @@
-from sqlmodel import Field
-
 from app.model.base_model import BaseModel
+from sqlalchemy import Column, String, Boolean
 
 
-class Post(BaseModel, table=True):
-    user_token: str = Field()
+class Post(BaseModel):
+    user_token: str = Column(String, nullable=False, unique=True)
 
-    title: str = Field(default=None, nullable=True)
-    content: str = Field(default=None, nullable=True)
-    is_published: bool = Field(default=False)
+    title: str = Column(String, default="", nullable=False)
+    content: str = Column(String, default="", nullable=False)
+    is_published: bool = Column(Boolean, default=False, nullable=False)

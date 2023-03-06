@@ -1,13 +1,12 @@
-from sqlmodel import Field
-
+from sqlalchemy import Column, String, Boolean
 from app.model.base_model import BaseModel
 
 
 class User(BaseModel, table=True):
-    email: str = Field(unique=True)
-    password: str = Field()
-    user_token: str = Field(unique=True)
+    email: str = Column(unique=True)
+    password: str = Column()
+    user_token: str = Column(unique=True)
 
-    name: str = Field(default=None, nullable=True)
-    is_active: bool = Field(default=True)
-    is_superuser: bool = Field(default=False)
+    name: str = Column(default=None, nullable=True)
+    is_active: bool = Column(default=True)
+    is_superuser: bool = Column(default=False)

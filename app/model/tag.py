@@ -1,10 +1,9 @@
-from sqlmodel import Field
-
 from app.model.base_model import BaseModel
+from sqlalchemy import Column, String, Boolean
 
 
-class Tag(BaseModel, table=True):
-    user_token: str = Field()
+class Tag(BaseModel):
+    user_token: str = Column()
 
-    name: str = Field(unique=True)
-    description: str = Field(default=None, nullable=True)
+    name: str = Column(unique=True)
+    description: str = Column(default=None, nullable=True)

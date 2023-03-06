@@ -1,9 +1,17 @@
 from datetime import datetime
 
-from sqlmodel import Column, DateTime, Field, SQLModel, func
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, DateTime, func, Integer
 
 
-class BaseModel(SQLModel):
-    id: int = Field(primary_key=True)
-    created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=func.now()))
-    updated_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=func.now(), onupdate=func.now()))
+class BaseDatetimeColumns:
+    id: int = Column(Integer, primary_key=True, index=True)
+    created_at: datetime = Column(
+        DateTime(timezone=True), nullable=False, server_default=func.now(), default=datetime.utcnow
+    )
+    updated_at: datetime = Column(
+        DateTime(timezone=True), nullable=False, server_default=func.now(), default=datetime.utcnow
+    )
+
+
+BaseModel = declarative_base(cls=BaseDatetimeColumns)
