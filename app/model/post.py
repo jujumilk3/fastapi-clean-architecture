@@ -1,8 +1,9 @@
-from app.model.base_model import BaseModel
+from app.model.base_model import Base
 from sqlalchemy import Column, String, Boolean
+from sqlalchemy.orm import DeclarativeBase
 
 
-class Post(BaseModel):
+class Post(Base):
     user_token: str = Column(String, nullable=False, unique=True)
 
     title: str = Column(String, default="", nullable=False)
