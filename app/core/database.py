@@ -1,9 +1,9 @@
 from contextlib import AbstractContextManager, contextmanager
 from typing import Any, Callable
 
-from sqlalchemy import create_engine, orm
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, scoped_session, sessionmaker
 
 
 @as_declarative()
@@ -20,8 +20,8 @@ class BaseModel:
 class Database:
     def __init__(self, db_url: str) -> None:
         self._engine = create_engine(db_url, echo=True)
-        self._session_factory = orm.scoped_session(
-            orm.sessionmaker(
+        self._session_factory = scoped_session(
+            sessionmaker(
                 autocommit=False,
                 autoflush=False,
                 bind=self._engine,

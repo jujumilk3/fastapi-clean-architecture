@@ -11,7 +11,6 @@ if os.getenv("ENV") not in ["test"]:
 
 from fastapi.testclient import TestClient
 from loguru import logger
-from sqlmodel import SQLModel, create_engine
 
 from app.core.config import settings
 from app.core.container import Container
