@@ -17,7 +17,7 @@ Base FastAPI project for applying general RestAPI Application cases.
 3. tag [post (n : n) tag]
 
 ## integrated with
-1. Python3.9+
+1. Python3.10+
 2. Fastapi 0.78.0
 3. Database
    1. MySQL5.7+
