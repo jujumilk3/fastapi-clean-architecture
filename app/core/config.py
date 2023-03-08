@@ -4,8 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ENV: str = ""
-
 
 class BaseConfigs:
     # base
@@ -54,7 +52,7 @@ class TestSettings(BaseConfigs):
     ENV: str = "test"
 
 
-settings = BaseConfigs
+ENV: str = os.getenv("ENV", "test")
 configs = BaseConfigs
 
 if ENV == "prod":
@@ -65,4 +63,3 @@ elif ENV == "dev":
     configs = BaseConfigs
 elif ENV == "test":
     configs = TestSettings
-    setting = TestSettings

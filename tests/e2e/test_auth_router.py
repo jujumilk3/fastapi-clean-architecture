@@ -1,4 +1,8 @@
-def test_sign_up_and_sign_in(client):
+import pytest
+
+
+@pytest.mark.asyncio
+async def test_sign_up_and_sign_in(client):
     response = client.post(
         "/api/v1/auth/sign-up",
         json={"email": "test", "password": "test", "name": "test"},
