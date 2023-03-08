@@ -1,7 +1,7 @@
 from datetime import timedelta
 from typing import List
 
-from app.core.config import settings
+from app.core.config import configs
 from app.core.exceptions import AuthError
 from app.core.security import create_access_token, get_password_hash, verify_password
 from app.model.user import User
@@ -35,7 +35,7 @@ class AuthService(BaseService):
             name=found_user.name,
             is_superuser=found_user.is_superuser,
         )
-        token_lifespan = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        token_lifespan = timedelta(minutes=configs.ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token, expiration_datetime = create_access_token(payload.dict(), token_lifespan)
         sign_in_result = {
             "access_token": access_token,

@@ -5,7 +5,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt
 from passlib.context import CryptContext
 
-from app.core.config import settings
+from app.core.config import configs
 from app.core.exceptions import AuthError
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -16,10 +16,10 @@ def create_access_token(subject: dict, expires_delta: timedelta = None) -> (str,
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        expire = datetime.utcnow() + timedelta(minutes=configs.ACCESS_TOKEN_EXPIRE_MINUTES)
     payload = {"exp": expire, **subject}
-    encoded_jwt = jwt.encode(payload, settings.SECRET_KEY, algorithm=ALGORITHM)
-    expiration_datetime = expire.strftime(settings.DATETIME_FORMAT)
+    encoded_jwt = jwt.encode(payload, configs.SECRET_KEY, algorithm=ALGORITHM)
+    expiration_datetime = expire.strftime(configs.DATETIME_FORMAT)
     return encoded_jwt, expiration_datetime
 
 
@@ -33,7 +33,7 @@ def get_password_hash(password: str) -> str:
 
 def decode_jwt(token: str) -> dict:
     try:
-        decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=ALGORITHM)
+        decoded_token = jwt.decode(token, configs.SECRET_KEY, algorithms=ALGORITHM)
         return decoded_token if decoded_token["exp"] >= int(round(datetime.utcnow().timestamp())) else None
     except Exception as e:
         return {}

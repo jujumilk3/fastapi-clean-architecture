@@ -3,7 +3,7 @@ from fastapi import Depends
 from jose import jwt
 from pydantic import ValidationError
 
-from app.core.config import settings
+from app.core.config import configs
 from app.core.container import Container
 from app.core.exceptions import AuthError
 from app.core.security import ALGORITHM, JWTBearer
@@ -18,7 +18,7 @@ def get_current_user(
     service: UserService = Depends(Provide[Container.user_service]),
 ) -> User:
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=ALGORITHM)
+        payload = jwt.decode(token, configs.SECRET_KEY, algorithms=ALGORITHM)
         token_data = Payload(**payload)
     except (jwt.JWTError, ValidationError):
         raise AuthError(detail="Could not validate credentials")
@@ -39,7 +39,7 @@ def get_current_user_with_no_exception(
     service: UserService = Depends(Provide[Container.user_service]),
 ) -> User:
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=ALGORITHM)
+        payload = jwt.decode(token, configs.SECRET_KEY, algorithms=ALGORITHM)
         token_data = Payload(**payload)
     except (jwt.JWTError, ValidationError):
         return None

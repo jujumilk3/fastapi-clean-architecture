@@ -4,7 +4,7 @@ from typing import Callable
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, joinedload
 
-from app.core.config import settings
+from app.core.config import configs
 from app.core.exceptions import DuplicatedError, NotFoundError
 from app.util.query_builder import dict_to_sqlalchemy_filter_options
 
@@ -17,14 +17,14 @@ class BaseRepository:
     def read_by_options(self, schema, eager=False):
         with self.session_factory() as session:
             schema_as_dict = schema.dict(exclude_none=True)
-            ordering = schema_as_dict.get("ordering", settings.ORDERING)
+            ordering = schema_as_dict.get("ordering", configs.ORDERING)
             order_query = (
                 getattr(self.model, ordering[1:]).desc()
                 if ordering.startswith("-")
                 else getattr(self.model, ordering).asc()
             )
-            page = schema_as_dict.get("page", settings.PAGE)
-            page_size = schema_as_dict.get("page_size", settings.PAGE_SIZE)
+            page = schema_as_dict.get("page", configs.PAGE)
+            page_size = schema_as_dict.get("page_size", configs.PAGE_SIZE)
             filter_options = dict_to_sqlalchemy_filter_options(self.model, schema.dict(exclude_none=True))
             query = session.query(self.model)
             if eager:
