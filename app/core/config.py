@@ -1,15 +1,15 @@
 import os
-from typing import Any, Dict, List, Optional
+from typing import List
 
 from dotenv import load_dotenv
-from pydantic import BaseSettings, validator
+from pydantic import BaseSettings
 
 load_dotenv()
 
 ENV: str = ""
 
 
-class Settings(BaseSettings):
+class Configs(BaseSettings):
     # base
     ENV: str = os.getenv("ENV", "dev")
     API: str = "/api"
@@ -46,31 +46,18 @@ class Settings(BaseSettings):
     DB_PASSWORD: str = os.getenv("DB_PASSWORD")
     DB_HOST: str = os.getenv("DB_HOST")
     DB_PORT: str = os.getenv("DB_PORT", "3306")
-    DB_DATABASE: str = ENV_DATABASE_MAPPER.get(ENV, "dev-fca")
-    DATABASE_URI: Optional[str] = os.getenv("DATABASE_URI")
     DB_ENGINE: str = DB_ENGINE_MAPPER.get(DB, "postgresql")
 
     DATABASE_URI_FORMAT: str = "{db_engine}://{user}:{password}@{host}:{port}/{database}"
 
-    DATABASE_URI_MAPPER: dict = dict()
-    for env in ENV_DATABASE_MAPPER:
-        DATABASE_URI_MAPPER[env] = DATABASE_URI_FORMAT.format(
-            db_engine=DB_ENGINE,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            database=ENV_DATABASE_MAPPER[env],
-        )
-
-    @validator("DATABASE_URI", pre=True)
-    def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
-        if isinstance(v, str):
-            return v
-        return (
-            f"{values.get('DB_ENGINE')}://{values.get('DB_USER')}:{values.get('DB_PASSWORD')}@"
-            f"{values.get('DB_HOST')}:{values.get('DB_PORT')}/{values.get('DB_DATABASE')}"
-        )
+    DATABASE_URI = "{db_engine}://{user}:{password}@{host}:{port}/{database}".format(
+        db_engine=DB_ENGINE,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        host=DB_HOST,
+        port=DB_PORT,
+        database=ENV_DATABASE_MAPPER[ENV],
+    )
 
     # find query
     PAGE = 1
@@ -81,15 +68,15 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 
-class TestSettings(Settings):
+class TestConfigs(Configs):
     ENV: str = "test"
 
 
-settings = Settings()
+configs = Configs()
 
 if ENV == "prod":
     pass
 elif ENV == "stage":
     pass
 elif ENV == "test":
-    setting = TestSettings()
+    setting = TestConfigs()

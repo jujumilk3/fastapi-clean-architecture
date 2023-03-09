@@ -13,7 +13,7 @@ from fastapi.testclient import TestClient
 from loguru import logger
 from sqlmodel import SQLModel, create_engine
 
-from app.core.config import settings
+from app.core.config import configs
 from app.core.container import Container
 from app.main import AppCreator
 from app.model.post import Post
@@ -50,7 +50,7 @@ def insert_default_data(conn):
 
 
 def reset_db():
-    engine = create_engine(settings.DATABASE_URI_MAPPER["test"])
+    engine = create_engine(configs.DATABASE_URI)
     logger.info(engine)
     with engine.begin() as conn:
         SQLModel.metadata.drop_all(conn)

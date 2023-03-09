@@ -14,7 +14,7 @@ cryptography==37.0.2
 dependency-injector==4.39.1
 ecdsa==0.17.0
 execnet==1.9.0
-fastapi==0.85.0
+fastapi==0.93.0
 greenlet==1.1.2
 h11==0.13.0
 httptools==0.4.0
@@ -53,11 +53,11 @@ sniffio==1.2.0
 SQLAlchemy==1.4.36
 sqlalchemy2-stubs==0.0.2a27
 sqlmodel==0.0.8
-starlette==0.20.4
+starlette==0.25.0
 tomli==2.0.1
 typing_extensions==4.2.0
 urllib3==1.26.12
-uvicorn==0.18.3
+uvicorn==0.20.0
 uvloop==0.16.0
 watchfiles==0.17.0
 watchgod==0.8.2

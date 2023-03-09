@@ -5,7 +5,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 from sqlmodel import SQLModel
 
-from app.core.config import settings
+from app.core.config import configs
 from app.model.post import Post
 from app.model.post_tag import PostTag
 from app.model.tag import Tag
@@ -22,7 +22,7 @@ else:
 # access to the values within the .ini file in use.
 config = context.config
 if not config.get_main_option("sqlalchemy.url"):
-    config.set_main_option("sqlalchemy.url", settings.DATABASE_URI_MAPPER[ENV])
+    config.set_main_option("sqlalchemy.url", configs.DATABASE_URI)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

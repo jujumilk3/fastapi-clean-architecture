@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 
-from app.core.config import settings
+from app.core.config import configs
 from app.core.database import Database
 from app.repository import *
 from app.services import *
@@ -18,7 +18,7 @@ class Container(containers.DeclarativeContainer):
         ]
     )
 
-    db = providers.Singleton(Database, db_url=settings.DATABASE_URI_MAPPER[settings.ENV])
+    db = providers.Singleton(Database, db_url=configs.DATABASE_URI)
 
     post_repository = providers.Factory(PostRepository, session_factory=db.provided.session)
     tag_repository = providers.Factory(TagRepository, session_factory=db.provided.session)
