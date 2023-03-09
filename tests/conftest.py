@@ -74,3 +74,8 @@ def client():
 @pytest.fixture
 def container():
     return Container()
+
+
+@pytest.fixture
+def test_name(request):
+    return request.node.name
