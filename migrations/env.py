@@ -41,6 +41,7 @@ target_metadata = SQLModel.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+
 # exclude system table
 def include_name(name, type_, parent_names):
     return False
