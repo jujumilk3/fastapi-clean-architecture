@@ -21,14 +21,14 @@ async def get_user_list(
     return service.get_list(find_query)
 
 
-@router.get("/{id}", response_model=User)
+@router.get("/{user_id}", response_model=User)
 @inject
 async def get_user(
-    id: int,
+    user_id: int,
     service: UserService = Depends(Provide[Container.user_service]),
     current_user: User = Depends(get_current_super_user),
 ):
-    return service.get_by_id(id)
+    return service.get_by_id(user_id)
 
 
 @router.post("", response_model=User)
@@ -41,22 +41,22 @@ async def create_user(
     return service.add(user)
 
 
-@router.patch("/{id}", response_model=User)
+@router.patch("/{user_id}", response_model=User)
 @inject
 async def update_user(
-    id: int,
+    user_id: int,
     user: UpsertUser,
     service: UserService = Depends(Provide[Container.user_service]),
     current_user: User = Depends(get_current_super_user),
 ):
-    return service.patch(id, user)
+    return service.patch(user_id, user)
 
 
-@router.delete("/{id}", response_model=Blank)
+@router.delete("/{user_id}", response_model=Blank)
 @inject
 async def delete_user(
-    id: int,
+    user_id: int,
     service: UserService = Depends(Provide[Container.user_service]),
     current_user: User = Depends(get_current_super_user),
 ):
-    return service.remove_by_id(id)
+    return service.remove_by_id(user_id)
