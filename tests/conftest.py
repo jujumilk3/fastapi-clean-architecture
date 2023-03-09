@@ -21,7 +21,7 @@ from app.model.user import User
 
 
 def insert_default_data(conn):
-    user_default_file = open("./tests/default_insert_data/users.json", "r")
+    user_default_file = open("./tests/test_data/users.json", "r")
     user_default_data = json.load(user_default_file)
     for user in user_default_data:
         conn.execute(
@@ -35,7 +35,7 @@ def insert_default_data(conn):
                 "is_superuser": user["is_superuser"],
             },
         )
-    post_default_file = open("./tests/default_insert_data/posts.json", "r")
+    post_default_file = open("./tests/test_data/posts.json", "r")
     post_default_data = json.load(post_default_file)
     for post in post_default_data:
         conn.execute(
@@ -53,9 +53,12 @@ def reset_db():
     engine = create_engine(configs.DATABASE_URI)
     logger.info(engine)
     with engine.begin() as conn:
-        SQLModel.metadata.drop_all(conn)
-        SQLModel.metadata.create_all(conn)
-        insert_default_data(conn)
+        if "test" in configs.DATABASE_URI:
+            SQLModel.metadata.drop_all(conn)
+            SQLModel.metadata.create_all(conn)
+            insert_default_data(conn)
+        else:
+            raise Exception("Not in test environment")
     return engine
 
 
