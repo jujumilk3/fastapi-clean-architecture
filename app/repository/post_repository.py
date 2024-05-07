@@ -10,6 +10,7 @@ from app.schema.post_tag_schema import UpsertPostWithTags
 
 class PostRepository(BaseRepository):
     def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]]):
+        self.session_factory = session_factory
         super().__init__(session_factory, Post)
 
     def create_with_tags(self, schema: UpsertPostWithTags, tags):
