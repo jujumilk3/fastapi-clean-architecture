@@ -17,16 +17,13 @@ class BasePost(BaseModel):
         orm_mode = True
 
 
-class Post(ModelBaseInfo, BasePost, metaclass=AllOptional):
-    ...
+class Post(ModelBaseInfo, BasePost, metaclass=AllOptional): ...
 
 
-class FindPost(FindBase, BasePost, metaclass=AllOptional):
-    ...
+class FindPost(FindBase, BasePost, metaclass=AllOptional): ...
 
 
-class UpsertPost(BasePost, metaclass=AllOptional):
-    ...
+class UpsertPost(BasePost, metaclass=AllOptional): ...
 
 
 class FindPostResult(BaseModel):
@@ -43,16 +40,14 @@ class BaseTag(BaseModel):
         orm_mode = True
 
 
-class Tag(ModelBaseInfo, BaseTag, metaclass=AllOptional):
-    ...
+class Tag(ModelBaseInfo, BaseTag, metaclass=AllOptional): ...
 
 
 class FindTag(FindBase, BaseTag, metaclass=AllOptional):
     id__in: str
 
 
-class UpsertTag(BaseTag, metaclass=AllOptional):
-    ...
+class UpsertTag(BaseTag, metaclass=AllOptional): ...
 
 
 class FindTagResult(BaseModel):

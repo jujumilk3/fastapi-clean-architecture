@@ -21,8 +21,7 @@ class BaseUserWithPassword(BaseUser):
     password: str
 
 
-class User(ModelBaseInfo, BaseUser, metaclass=AllOptional):
-    ...
+class User(ModelBaseInfo, BaseUser, metaclass=AllOptional): ...
 
 
 class FindUser(FindBase, BaseUser, metaclass=AllOptional):
@@ -30,8 +29,7 @@ class FindUser(FindBase, BaseUser, metaclass=AllOptional):
     ...
 
 
-class UpsertUser(BaseUser, metaclass=AllOptional):
-    ...
+class UpsertUser(BaseUser, metaclass=AllOptional): ...
 
 
 class FindUserResult(BaseModel):
