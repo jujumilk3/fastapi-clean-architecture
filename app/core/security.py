@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from typing import Tuple
 
 from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -12,7 +13,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALGORITHM = "HS256"
 
 
-def create_access_token(subject: dict, expires_delta: timedelta = None) -> (str, str):
+def create_access_token(subject: dict, expires_delta: timedelta = None) -> Tuple[str, str]:
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:

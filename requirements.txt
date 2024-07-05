@@ -3,7 +3,7 @@ alembic==1.7.7
 anyio==3.6.1
 asgiref==3.5.2
 asyncpg==0.26.0
-attrs==21.4.0
+attrs==22.2.0
 bcrypt==3.2.2
 certifi==2022.9.24
 cffi==1.15.0

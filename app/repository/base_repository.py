@@ -1,23 +1,26 @@
 from contextlib import AbstractContextManager
-from typing import Callable
+from typing import Any, Callable, Type, TypeVar
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, joinedload
 
 from app.core.config import configs
 from app.core.exceptions import DuplicatedError, NotFoundError
+from app.model.base_model import BaseModel
 from app.util.query_builder import dict_to_sqlalchemy_filter_options
+
+T = TypeVar("T", bound=BaseModel)
 
 
 class BaseRepository:
-    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]], model) -> None:
+    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]], model: Type[T]) -> None:
         self.session_factory = session_factory
         self.model = model
 
-    def read_by_options(self, schema, eager=False):
+    def read_by_options(self, schema: T, eager: bool = False) -> dict:
         with self.session_factory() as session:
-            schema_as_dict = schema.dict(exclude_none=True)
-            ordering = schema_as_dict.get("ordering", configs.ORDERING)
+            schema_as_dict: dict = schema.dict(exclude_none=True)
+            ordering: str = schema_as_dict.get("ordering", configs.ORDERING)
             order_query = (
                 getattr(self.model, ordering[1:]).desc()
                 if ordering.startswith("-")
@@ -47,7 +50,7 @@ class BaseRepository:
                 },
             }
 
-    def read_by_id(self, id: int, eager=False):
+    def read_by_id(self, id: int, eager: bool = False):
         with self.session_factory() as session:
             query = session.query(self.model)
             if eager:
@@ -58,7 +61,7 @@ class BaseRepository:
                 raise NotFoundError(detail=f"not found id : {id}")
             return query
 
-    def create(self, schema):
+    def create(self, schema: T):
         with self.session_factory() as session:
             query = self.model(**schema.dict())
             try:
@@ -69,19 +72,19 @@ class BaseRepository:
                 raise DuplicatedError(detail=str(e.orig))
             return query
 
-    def update(self, id: int, schema):
+    def update(self, id: int, schema: T):
         with self.session_factory() as session:
             session.query(self.model).filter(self.model.id == id).update(schema.dict(exclude_none=True))
             session.commit()
             return self.read_by_id(id)
 
-    def update_attr(self, id: int, column: str, value):
+    def update_attr(self, id: int, column: str, value: Any):
         with self.session_factory() as session:
             session.query(self.model).filter(self.model.id == id).update({column: value})
             session.commit()
             return self.read_by_id(id)
 
-    def whole_update(self, id: int, schema):
+    def whole_update(self, id: int, schema: T):
         with self.session_factory() as session:
             session.query(self.model).filter(self.model.id == id).update(schema.dict())
             session.commit()
