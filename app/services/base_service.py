@@ -41,3 +41,6 @@ class BaseService:
 
     def remove_by_id(self, id: int) -> Any:
         return self._repository.delete_by_id(id)
+
+    def close_scoped_session(self):
+        self._repository.close_scoped_session()
