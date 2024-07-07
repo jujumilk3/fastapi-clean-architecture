@@ -97,3 +97,6 @@ class BaseRepository:
                 raise NotFoundError(detail=f"not found id : {id}")
             session.delete(query)
             session.commit()
+
+    def close_scoped_session(self):
+        return self.session_factory.close()

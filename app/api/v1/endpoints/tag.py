@@ -1,8 +1,9 @@
-from dependency_injector.wiring import Provide, inject
+from dependency_injector.wiring import Provide
 from fastapi import APIRouter, Depends
 
 from app.core.container import Container
 from app.core.dependencies import get_current_active_user
+from app.core.middleware import inject
 from app.model.user import User
 from app.schema.base_schema import Blank
 from app.schema.post_tag_schema import FindTag, FindTagResult, Tag, UpsertTag
@@ -16,7 +17,7 @@ router = APIRouter(
 
 @router.get("", response_model=FindTagResult)
 @inject
-async def get_tag_list(
+def get_tag_list(
     find_query: FindTag = Depends(),
     service: TagService = Depends(Provide[Container.tag_service]),
 ):
@@ -25,7 +26,7 @@ async def get_tag_list(
 
 @router.get("/{tag_id}", response_model=Tag)
 @inject
-async def get_tag(
+def get_tag(
     tag_id: int,
     service: TagService = Depends(Provide[Container.tag_service]),
 ):
@@ -34,7 +35,7 @@ async def get_tag(
 
 @router.post("", response_model=Tag)
 @inject
-async def create_tag(
+def create_tag(
     tag: UpsertTag,
     service: TagService = Depends(Provide[Container.tag_service]),
     current_user: User = Depends(get_current_active_user),
@@ -44,7 +45,7 @@ async def create_tag(
 
 @router.patch("/{tag_id}", response_model=Tag)
 @inject
-async def update_tag(
+def update_tag(
     tag_id: int,
     tag: UpsertTag,
     service: TagService = Depends(Provide[Container.tag_service]),
@@ -55,7 +56,7 @@ async def update_tag(
 
 @router.delete("/{tag_id}", response_model=Blank)
 @inject
-async def delete_tag(
+def delete_tag(
     tag_id: int,
     service: TagService = Depends(Provide[Container.tag_service]),
     current_user: User = Depends(get_current_active_user),
