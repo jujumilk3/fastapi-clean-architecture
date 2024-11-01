@@ -99,4 +99,5 @@ class BaseRepository:
             session.commit()
 
     def close_scoped_session(self):
-        return self.session_factory.close()
+        with self.session_factory() as session:
+            return session.close()
